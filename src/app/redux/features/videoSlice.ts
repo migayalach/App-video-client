@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { getInformation } from "./informationSlice";
 
 export interface Video {
   idVideo: string;
@@ -26,11 +27,10 @@ const initialState: VideoState = {
 };
 
 export const getVideo = createAsyncThunk("video/getVideo", async () => {
-  console.log();
   const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/video`);
   if (!response.ok) throw new Error("Error al obtener los videos");
-
   const data = await response.json();
+  getInformation();
   return data.results;
 });
 
