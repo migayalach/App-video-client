@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./features/counterSlice";
-import productReducer from "./features/productSlice";
 import videoReducer from "./features/videoSlice";
+import informationReducer from "./features/informationSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      counter: counterReducer,
-      product: productReducer,
+      information: informationReducer,
       videos: videoReducer,
     },
   });
