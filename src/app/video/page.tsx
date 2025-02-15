@@ -1,14 +1,16 @@
 "use client";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { getVideo } from "../redux/features/videoSlice";
 import { RootState } from "../redux/store";
 
 function Page() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const selectVideo = useAppSelector((state: RootState) => state.videos);
+  console.log(selectVideo);
 
   useEffect(() => {
-    dispatch(getVideo() as any);
+    dispatch(getVideo());
   }, []);
 
   return (
