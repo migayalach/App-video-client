@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { getInformation } from "./informationSlice";
+import { setInformation } from "./informationSlice";
 
 export interface Video {
   idVideo: string;
@@ -15,29 +15,36 @@ export interface Video {
 }
 
 export interface VideoState {
-  video: Video[];
+  videos: Video[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: VideoState = {
-  video: [],
+  videos: [],
   loading: false,
   error: null,
 };
 
-export const getVideo = createAsyncThunk("video/getVideo", async () => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/video`);
-  if (!response.ok) throw new Error("Error al obtener los videos");
-  const data = await response.json();
-  getInformation();
-  return data.results;
-});
+export const getVideo = createAsyncThunk(
+  "video/getVideo",
+  async (_, { dispatch }) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/video`);
+    if (!response.ok) throw new Error("Error al obtener los videos");
+    const data = await response.json();
+    dispatch(setInformation(data.info));
+    return data.results;
+  }
+);
 
 const videoSlice = createSlice({
-  name: "video",
+  name: "videos",
   initialState,
-  reducers: {},
+  reducers: {
+    clearVideos: (state) => {
+      state.videos = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getVideo.pending, (state) => {
@@ -45,7 +52,7 @@ const videoSlice = createSlice({
         state.error = null;
       })
       .addCase(getVideo.fulfilled, (state, action: PayloadAction<Video[]>) => {
-        state.video = action.payload;
+        state.videos = action.payload;
         state.loading = false;
       })
       .addCase(getVideo.rejected, (state, action) => {
@@ -55,4 +62,5 @@ const videoSlice = createSlice({
   },
 });
 
+export const { clearVideos } = videoSlice.actions;
 export default videoSlice.reducer;
