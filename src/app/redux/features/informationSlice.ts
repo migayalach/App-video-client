@@ -1,21 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface InformationState {
-  information: any;
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
 }
 
 const initialState: InformationState = {
-  information: {},
+  info: { count: 0, pages: 0, next: null, prev: null },
 };
 
-export const getInformation = () => {
-  console.log("Holis");
-};
-
-const informationSclice = createSlice({
+const informationSlice = createSlice({
   name: "information",
   initialState,
-  reducers: {},
+  reducers: {
+    setInformation: (
+      state,
+      action: PayloadAction<InformationState["info"]>
+    ) => {
+      state.info = action.payload;
+    },
+    clearInformation: (state) => {
+      state.info = { count: 0, pages: 0, next: null, prev: null };
+    },
+  },
 });
 
-export default informationSclice.reducer;
+export const { setInformation, clearInformation } = informationSlice.actions;
+export default informationSlice.reducer;
