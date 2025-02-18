@@ -7,7 +7,7 @@ import CardVideo from "@/components/videos/card/CardVideo";
 
 function Page() {
   const dispatch = useAppDispatch();
-  const selectVideo = useAppSelector((state: RootState) => state.videos);
+  const selectVideo = useAppSelector((state: RootState) => state.videos.videos);
 
   useEffect(() => {
     dispatch(getVideo());
@@ -15,8 +15,7 @@ function Page() {
 
   return (
     <div>
-      <h1>Videos</h1>
-      <CardVideo />
+      <CardVideo videos={selectVideo} />
     </div>
   );
 }
