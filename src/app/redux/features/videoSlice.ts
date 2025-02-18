@@ -16,12 +16,14 @@ export interface Video {
 
 export interface VideoState {
   videos: Video[];
+  videoDetail: Video | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: VideoState = {
   videos: [],
+  videoDetail: null,
   loading: false,
   error: null,
 };
@@ -37,6 +39,17 @@ export const getVideo = createAsyncThunk(
   }
 );
 
+export const getIdVideo = createAsyncThunk<Video, string>(
+  "video/getIdVideo",
+  async (idVideo) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/video/${idVideo}`
+    );
+    if (!response) throw new Error("Error al obtener informacion");
+    return response.json();
+  }
+);
+
 const videoSlice = createSlice({
   name: "videos",
   initialState,
@@ -44,9 +57,13 @@ const videoSlice = createSlice({
     clearVideos: (state) => {
       state.videos = [];
     },
+    clearVideoDetail: (state) => {
+      state.videoDetail = null;
+    },
   },
   extraReducers: (builder) => {
     builder
+      // VIDEO ALL
       .addCase(getVideo.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -58,9 +75,23 @@ const videoSlice = createSlice({
       .addCase(getVideo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Error desconocido";
+      })
+      // VIDEO DETAIL
+      .addCase(getIdVideo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getIdVideo.fulfilled, (state, action: PayloadAction<Video>) => {
+        state.videoDetail = action.payload;
+        state.loading = false;
+      })
+      .addCase(getIdVideo.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || "Error al obtener los detalles del video";
       });
   },
 });
 
-export const { clearVideos } = videoSlice.actions;
+export const { clearVideos, clearVideoDetail } = videoSlice.actions;
 export default videoSlice.reducer;
