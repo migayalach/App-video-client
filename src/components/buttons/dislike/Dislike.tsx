@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { DislikeOutlined } from "@ant-design/icons";
 
 function Dislike() {
   return (
-    <div>Dislike</div>
-  )
+    <div>
+      <DislikeOutlined />
+    </div>
+  );
 }
 
-export default Dislike
+export default Dislike;
