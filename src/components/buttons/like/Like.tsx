@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { LikeOutlined } from "@ant-design/icons";
 
 function Like() {
   return (
-    <div>Like</div>
-  )
+    <div>
+      <LikeOutlined />
+    </div>
+  );
 }
 
-export default Like
+export default Like;
