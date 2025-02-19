@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import ToolsDownload from "@/components/modal/toolsDownload/ToolsDownload";
 
 function Download() {
   return (
-    <div>Download</div>
-  )
+    <div>
+      <ToolsDownload />
+    </div>
+  );
 }
 
-export default Download
+export default Download;
