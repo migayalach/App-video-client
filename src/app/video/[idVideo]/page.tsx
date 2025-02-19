@@ -7,7 +7,6 @@ import {
   clearVideos,
   clearVideoDetail,
 } from "@redux/features/videoSlice";
-import Multimedia from "@/components/videos/multimedia/Multimedia";
 import Loading from "@/components/loading/Loading";
 import Container from "@/components/videos/conteiner/Container";
 
@@ -33,11 +32,12 @@ function Page() {
   return (
     <div>
       <Container
+        url={information.url}
         title={information.nameVideo}
         date={information.dateCreate}
         description={information.description}
+        averange={information.average}
       />
-      {/* <Multimedia url={information?.url} /> */}
     </div>
   );
 }
