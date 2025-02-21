@@ -1,4 +1,4 @@
-import Lower from "@/component/lower/Lower";
+import Lower from "@/components/lower/Lower";
 import React from "react";
 
 function page() {
