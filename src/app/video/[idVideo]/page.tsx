@@ -1,12 +1,12 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   getIdVideo,
   clearVideos,
   clearVideoDetail,
-} from "@redux/features/videoSlice";
+} from "@/redux/features/videoSlice";
 import Loading from "@/components/loading/Loading";
 import Container from "@/components/videos/conteiner/Container";
 
