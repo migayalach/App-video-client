@@ -1,3 +1,5 @@
+import { Info } from "./response.interface";
+
 export interface Video {
   idVideo: string;
   idUser: string;
@@ -10,6 +12,15 @@ export interface Video {
   average: number;
   isDelete: string;
 }
+
+export interface VideoState {
+  videos: Video[];
+  info: Info | null;
+  videoDetail: Video | null;
+  loading: boolean;
+  error: string | null;
+}
+
 
 export interface CardVideoProps {
   videos: Video[];
