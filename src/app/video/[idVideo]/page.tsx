@@ -8,7 +8,6 @@ import {
   clearVideoDetail,
 } from "@/redux/features/videoSlice";
 import Loading from "@/components/loading/Loading";
-import Container from "@/components/videos/conteiner/Container";
 
 function Page() {
   const { idVideo }: { idVideo: string } = useParams();
@@ -31,13 +30,7 @@ function Page() {
 
   return (
     <div>
-      <Container
-        url={information.url}
-        title={information.nameVideo}
-        date={information.dateCreate}
-        description={information.description}
-        averange={information.average}
-      />
+      <h1>{idVideo}</h1>
     </div>
   );
 }
