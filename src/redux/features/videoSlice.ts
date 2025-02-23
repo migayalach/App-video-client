@@ -1,43 +1,21 @@
+import { Response } from "@/interfaces/response.interface";
+import { Video, VideoState } from "@/interfaces/video.interface";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { setInformation } from "./informationSlice";
-
-export interface Video {
-  idVideo: string;
-  idUser: string;
-  idRanking: string;
-  nameVideo: string;
-  description: string;
-  url: string;
-  stateVideo: string;
-  dateCreate: string;
-  average: number;
-  isDelete: string;
-}
-
-export interface VideoState {
-  videos: Video[];
-  videoDetail: Video | null;
-  loading: boolean;
-  error: string | null;
-}
 
 const initialState: VideoState = {
+  info: null,
   videos: [],
   videoDetail: null,
   loading: false,
   error: null,
 };
 
-export const getVideo = createAsyncThunk(
-  "video/getVideo",
-  async (_, { dispatch }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/video`);
-    if (!response.ok) throw new Error("Error al obtener los videos");
-    const data = await response.json();
-    dispatch(setInformation(data.info));
-    return data.results;
-  }
-);
+export const getVideo = createAsyncThunk("video/getVideo", async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/video`);
+  if (!response.ok) throw new Error("Error al obtener los videos");
+  const data = await response.json();
+  return data;
+});
 
 export const getIdVideo = createAsyncThunk<Video, string>(
   "video/getIdVideo",
@@ -55,6 +33,7 @@ const videoSlice = createSlice({
   initialState,
   reducers: {
     clearVideos: (state) => {
+      state.info = null;
       state.videos = [];
     },
     clearVideoDetail: (state) => {
@@ -68,8 +47,9 @@ const videoSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(getVideo.fulfilled, (state, action: PayloadAction<Video[]>) => {
-        state.videos = action.payload;
+      .addCase(getVideo.fulfilled, (state, action: PayloadAction<Response>) => {
+        state.info = action.payload.info;
+        state.videos = action.payload.results;
         state.loading = false;
       })
       .addCase(getVideo.rejected, (state, action) => {
