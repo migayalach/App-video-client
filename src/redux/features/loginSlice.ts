@@ -13,7 +13,7 @@ export interface LoginState {
 }
 
 const initialState: LoginState = {
-  user: { email: "", password: "" },
+  user: null,
   loading: false,
   error: null,
 };
