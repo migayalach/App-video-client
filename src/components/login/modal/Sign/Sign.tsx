@@ -9,11 +9,8 @@ const Sign: React.FC = () => {
   const [sign, setSign] = useState("in");
 
   const changeSign = () => {
-    if (sign === "in") {
-      setSign("up");
-    } else if (sign === "up") {
-      setSign("in");
-    }
+    if (sign === "in") setSign("up");
+    else if (sign === "up") setSign("in");
   };
 
   const showModal = () => {
