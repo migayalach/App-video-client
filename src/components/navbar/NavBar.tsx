@@ -10,57 +10,59 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import Link from "next/link";
 import Sign from "@/components/login/modal/Sign/Sign";
+import { useAppSelector } from "@redux/hooks";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-const items: MenuItem[] = [
-  {
-    label: <Link href="/">Home</Link>,
-    key: "home",
-    icon: <HomeOutlined />,
-  },
-  {
-    label: <Link href="/video">"Videos"</Link>,
-    key: "videos",
-    icon: <PlayCircleOutlined />,
-  },
-  {
-    label: <Link href="/download">Download</Link>,
-    key: "download",
-    icon: <DownloadOutlined />,
-  },
-  {
-    label: <Sign />,
-    key: "login",
-  },
-  {
-    label: "User",
-    key: "SubMenu",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: "group",
-        label: "My profile",
-        children: [
-          { label: "My videos", key: "setting:1" },
-          { label: "Favorite videos", key: "setting:2" },
-        ],
-      },
-      {
-        type: "group",
-        label: "Options",
-        children: [{ label: "Close sesion", key: "setting:3" }],
-      },
-    ],
-  },
-];
-
 const NavBar: React.FC = () => {
   const [current, setCurrent] = useState("mail");
-
+  const userData = useAppSelector(({ sign }) => sign?.user);
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
   };
+
+  const items: MenuItem[] = [
+    {
+      label: <Link href="/">Home</Link>,
+      key: "home",
+      icon: <HomeOutlined />,
+    },
+    {
+      label: <Link href="/video">"Videos"</Link>,
+      key: "videos",
+      icon: <PlayCircleOutlined />,
+    },
+    {
+      label: <Link href="/download">Download</Link>,
+      key: "download",
+      icon: <DownloadOutlined />,
+    },
+    ...(userData
+      ? [
+          {
+            label: <Sign />,
+            key: "login",
+          },
+        ]
+      : [
+          {
+            label: "User",
+            key: "SubMenu",
+            icon: <SettingOutlined />,
+            children: [
+              {
+                label: <Link href="/myVideos">My videos</Link>,
+                key: "setting:1",
+              },
+              {
+                label: <Link href="/favorites">Favorite videos</Link>,
+                key: "setting:2",
+              },
+              { label: "Close sesion", key: "setting:3" },
+            ],
+          },
+        ]),
+  ];
 
   return (
     <Menu
