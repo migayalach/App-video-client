@@ -21,7 +21,8 @@ export interface VideoState {
   error: string | null;
 }
 
-
 export interface CardVideoProps {
-  videos: Video[];
+  idVideo: string;
+  nameVideo: string;
+  average: number;
 }
