@@ -1,14 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Button } from "antd";
 import CollapseOpt from "@/components/collapseOpt/CollapseOpt";
 import { FileType, MP3Type, MP4Type } from "@/types/download.type";
 import { CloudDownloadOutlined } from "@ant-design/icons";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { downloadServer } from "@redux/features/downloadSlice";
 
 function Lower() {
   const dispatch = useAppDispatch();
+  const infoVideo = useAppSelector(({ videos }) => videos?.videoDetail);
+
   const [data, setData] = useState({
     url: "",
     quality: "",
@@ -34,15 +36,32 @@ function Lower() {
     dispatch(downloadServer(data));
   };
 
+  useEffect(() => {
+    if (infoVideo) {
+      data.url = infoVideo.url;
+    } else {
+      data.url = "";
+    }
+    return () => {
+      setData({
+        url: "",
+        quality: "",
+        format: "",
+      });
+    };
+  }, [infoVideo]);
+
   return (
     <div>
       <div>
-        <Input
-          name="url"
-          onChange={handleData}
-          style={{ width: "40%" }}
-          placeholder="URL"
-        />
+        {!infoVideo && (
+          <Input
+            name="url"
+            onChange={handleData}
+            style={{ width: "40%" }}
+            placeholder="URL"
+          />
+        )}
         <CollapseOpt action={changeInfo} />
       </div>
       <div>
