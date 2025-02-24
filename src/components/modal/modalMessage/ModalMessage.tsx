@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
-import SignIn from "@/components/login/modal/signIn/SignIn";
-import SignUp from "@/components/login/modal/signUp/SignUp";
+import SignIn from "@/components/login/signIn/SignIn";
+import SignUp from "@/components/login/signUp/SignUp";
 import { ModalMessageProps } from "@/interfaces/modalMessage.interface";
 
 const ModalMessage: React.FC<ModalMessageProps> = ({ flag, actionOff }) => {
