@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   getIdVideo,
@@ -8,6 +8,11 @@ import {
   clearVideoDetail,
 } from "@/redux/features/videoSlice";
 import Loading from "@/components/loading/Loading";
+import Multimedia from "@/components/multimedia/Multimedia";
+import Like from "@/components/like/LIke";
+import Dislike from "@/components/dislike/Dislike";
+import Suscription from "@/components/suscription/Suscription";
+import ModalDownload from "@/components/modal/modalDownload/ModalDownload";
 
 function Page() {
   const { idVideo }: { idVideo: string } = useParams();
@@ -31,6 +36,14 @@ function Page() {
   return (
     <div>
       <h1>{idVideo}</h1>
+      <Multimedia url={information.url} />
+      <Like />
+      <Dislike />
+      <Suscription />
+      <ModalDownload />
+      {information.nameVideo}
+      {information.dateCreate}
+      {information.description}
     </div>
   );
 }
