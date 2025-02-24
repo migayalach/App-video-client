@@ -15,9 +15,21 @@ function Page() {
 
   return (
     <div>
-      <CardVideo videos={selectVideo} />
+      {selectVideo.map(({ idVideo, nameVideo, average }) => {
+        return (
+          <div key={idVideo}>
+            <CardVideo
+              idVideo={idVideo}
+              nameVideo={nameVideo}
+              average={average}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 export default Page;
+
+// https://www.robertwalters.es/ittelecomunicaciones/ofertas-empleo/softwaredevelopment/1810853-net-engineer-junior-sector-ind%c3%bastria.html
