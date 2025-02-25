@@ -37,7 +37,7 @@ const NavBar: React.FC = () => {
       key: "download",
       icon: <DownloadOutlined />,
     },
-    ...(userData
+    ...(!userData
       ? [
           {
             label: <Sign />,
