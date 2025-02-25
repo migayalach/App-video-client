@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { getVideo } from "../../redux/features/videoSlice";
 import { RootState } from "../../redux/store";
 import CardVideo from "@/components/card/CardVideo";
+import Filters from "@/components/filters/Filters";
 
 function Page() {
   const dispatch = useAppDispatch();
@@ -15,17 +16,23 @@ function Page() {
 
   return (
     <div>
-      {selectVideo.map(({ idVideo, nameVideo, average }) => {
-        return (
-          <div key={idVideo}>
-            <CardVideo
-              idVideo={idVideo}
-              nameVideo={nameVideo}
-              average={average}
-            />
-          </div>
-        );
-      })}
+      <div>
+        <Filters />
+      </div>
+
+      <div>
+        {selectVideo.map(({ idVideo, nameVideo, average }) => {
+          return (
+            <div key={idVideo}>
+              <CardVideo
+                idVideo={idVideo}
+                nameVideo={nameVideo}
+                average={average}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
