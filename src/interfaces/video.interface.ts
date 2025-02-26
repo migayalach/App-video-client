@@ -6,6 +6,7 @@ export interface Video {
   idRanking: string;
   nameVideo: string;
   description: string;
+  image: string;
   url: string;
   stateVideo: string;
   dateCreate: string;
@@ -24,5 +25,6 @@ export interface VideoState {
 export interface CardVideoProps {
   idVideo: string;
   nameVideo: string;
+  image: string;
   average: number;
 }
