@@ -45,7 +45,6 @@ const SignUp: React.FC = () => {
 
   return (
     <Form
-      name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
