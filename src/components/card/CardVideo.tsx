@@ -8,6 +8,7 @@ const { Meta } = Card;
 const CardVideo: React.FC<CardVideoProps> = ({
   idVideo,
   nameVideo,
+  image,
   average,
 }) => {
   return (
@@ -16,12 +17,7 @@ const CardVideo: React.FC<CardVideoProps> = ({
         <Card
           hoverable
           style={{ width: 240, marginBottom: 16 }}
-          cover={
-            <img
-              alt={nameVideo}
-              src="https://res.cloudinary.com/dqgcyonb9/image/upload/v1727672916/Ballet/qplzcc8imwnxtmwjcdec.jpg"
-            />
-          }
+          cover={<img alt={nameVideo} src={image} />}
         >
           <Meta title={nameVideo} />
         </Card>
