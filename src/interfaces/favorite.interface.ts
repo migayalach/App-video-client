@@ -6,12 +6,15 @@ export interface Results {
   }
   
   export interface Video {
+    idVideo: string;
     idUser: string;
     nameVideo: string;
     description: string;
+    image: string;
     url: string;
     stateVideo: string;
     dateCreate: string;
+    average: number
   }
   export interface LikeState {
     info: Info | null;
