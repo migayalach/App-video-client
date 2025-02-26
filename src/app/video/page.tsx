@@ -1,14 +1,13 @@
 "use client";
 import React, { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { getVideo } from "../../redux/features/videoSlice";
-import { RootState } from "../../redux/store";
+import { useAppSelector, useAppDispatch } from "@redux/hooks";
+import { getVideo } from "@redux/features/videoSlice";
 import CardVideo from "@/components/card/CardVideo";
 import Filters from "@/components/filters/Filters";
 
 function Page() {
   const dispatch = useAppDispatch();
-  const selectVideo = useAppSelector((state: RootState) => state.videos.videos);
+  const selectVideo = useAppSelector(({ videos }) => videos.videos);
 
   useEffect(() => {
     dispatch(getVideo());
@@ -21,12 +20,13 @@ function Page() {
       </div>
 
       <div>
-        {selectVideo.map(({ idVideo, nameVideo, average }) => {
+        {selectVideo.map(({ idVideo, nameVideo, image, average }) => {
           return (
             <div key={idVideo}>
               <CardVideo
                 idVideo={idVideo}
                 nameVideo={nameVideo}
+                image={image}
                 average={average}
               />
             </div>
