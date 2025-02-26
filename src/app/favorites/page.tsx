@@ -17,27 +17,21 @@ function page() {
     }
   }, []);
 
-  // : {idVideo, nameVideo, average}
-  // return (
-  //   <div key={idVideo}>
-  //   <CardVideo
-  //     idVideo={idVideo}
-  //     nameVideo={nameVideo}
-  //     average={average}
-  //   />
-  // </div>
-
-  // const data = selectFavorites?.map(({ idLike, video }) => {
-  //   return {
-  //     a: video.
-  //   }
-  // }
-  // );
-
   return (
     <div>
       <h1>favorites</h1>
-      {/* <div>{selectFavorites.map(({ idLike, video }) => )}</div> */}
+      {selectFavorites?.map(({ idLike, video }) => {
+        return (
+          <div key={idLike}>
+            <CardVideo
+              idVideo={video.idVideo}
+              nameVideo={video.nameVideo}
+              image={video.image}
+              average={video.average}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
