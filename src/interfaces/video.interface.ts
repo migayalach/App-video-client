@@ -12,6 +12,7 @@ export interface Video {
   dateCreate: string;
   average: number;
   isDelete: string;
+  usersLike: string[];
 }
 
 export interface VideoState {
