@@ -1,8 +1,24 @@
-import React from "react";
-import { CustomerServiceOutlined } from "@ant-design/icons";
-import { FloatButton } from "antd";
+"use client";
+import React, { useState } from "react";
+import { VideoCameraAddOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { FloatButton, Modal } from "antd";
+import FormVideo from "../form/form-video/FormVideo";
 
 const FloatVideo: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <>
@@ -10,15 +26,28 @@ const FloatVideo: React.FC = () => {
           shape="circle"
           type="primary"
           style={{ insetInlineEnd: 94 }}
-          icon={<CustomerServiceOutlined />}
+          icon={<VideoCameraAddOutlined />}
+          onClick={showModal}
         />
+
         <FloatButton
           shape="square"
           type="primary"
           style={{ insetInlineEnd: 24 }}
-          icon={<CustomerServiceOutlined />}
+          icon={<InfoCircleOutlined />}
         />
       </>
+
+      {isModalOpen && (
+        <Modal
+          title="Add new video"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <FormVideo />
+        </Modal>
+      )}
     </div>
   );
 };
