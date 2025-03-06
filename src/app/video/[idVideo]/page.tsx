@@ -9,7 +9,7 @@ import {
 } from "@/redux/features/videoSlice";
 import Loading from "@/components/loading/Loading";
 import Multimedia from "@/components/multimedia/Multimedia";
-import Like from "@/components/like/LIke";
+import Like from "@/components/like/Like";
 import Suscription from "@/components/suscription/Suscription";
 import ModalDownload from "@/components/modal/modalDownload/ModalDownload";
 
