@@ -8,7 +8,7 @@ function page() {
   const dispatch = useAppDispatch();
   const selectUser = useAppSelector(({ sign }) => sign?.user);
   const selectFavorites = useAppSelector(
-    ({ favorites }) => favorites?.favorites
+    ({ favorites }) => favorites?.results
   );
 
   useEffect(() => {
@@ -20,18 +20,20 @@ function page() {
   return (
     <div>
       <h1>favorites</h1>
-      {selectFavorites?.map(({ idLike, video }) => {
-        return (
-          <div key={idLike}>
-            <CardVideo
-              idVideo={video.idVideo}
-              nameVideo={video.nameVideo}
-              image={video.image}
-              average={video.average}
-            />
-          </div>
-        );
-      })}
+      {selectFavorites?.map(
+        ({ idVideo, nameVideo, image, average }) => {
+          return (
+            <div key={idVideo}>
+              <CardVideo
+                idVideo={idVideo}
+                nameVideo={nameVideo}
+                image={image}
+                average={average}
+              />
+            </div>
+          );
+        }
+      )}
     </div>
   );
 }
