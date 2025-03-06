@@ -1,20 +1,24 @@
-import { LikeState, Results } from "@/interfaces/favorite.interface";
+import {
+  ActFavorite,
+  LikeState,
+  ResponseLike,
+} from "@/interfaces/favorite.interface";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Response } from "@/interfaces/response.interface";
 import axios from "axios";
 
 const initialState: LikeState = {
   info: null,
-  favorites: [],
+  results: [],
+  message: "",
   loading: false,
   error: null,
 };
 
-export const getFavorites = createAsyncThunk<Results[], string>(
+export const getFavorites = createAsyncThunk<LikeState, string>(
   "like/getFavorites",
   async (idUser, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get<Results[]>(
+      const { data } = await axios.get<LikeState>(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/like/${idUser}`,
         {
           headers: {
@@ -31,75 +35,85 @@ export const getFavorites = createAsyncThunk<Results[], string>(
   }
 );
 
-export const postFavorite = createAsyncThunk<any, Partial<any>>(
-  "like/postFavorite",
-  async (information, { rejectWithValue }) => {
-    try {
-      const data = await axios.post<any>(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/like`,
-        information,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Error al iniciar sesión"
-      );
-    }
+export const postFavorite = createAsyncThunk<
+  ResponseLike,
+  Partial<ActFavorite>
+>("like/postFavorite", async (information, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post<ResponseLike>(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/like`,
+      information,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (error: any) {
+    return rejectWithValue(
+      error.response?.data?.message || "Error al iniciar sesión"
+    );
   }
-);
+});
 
-export const deleteFavorite = createAsyncThunk<any, Partial<string>>(
-  "like/deleteFavorite",
-  async (information, { rejectWithValue }) => {
-    try {
-      const data = await axios.delete<any>(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/like/${information}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Error al iniciar sesión"
-      );
-    }
+export const deleteFavorite = createAsyncThunk<
+  ResponseLike,
+  Partial<ActFavorite>
+>("like/deleteFavorite", async (information, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.delete<ResponseLike>(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/like/${information.idVideo}/${information.idUser}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (error: any) {
+    return rejectWithValue(
+      error.response?.data?.message || "Error al iniciar sesión"
+    );
   }
-);
+});
 
 const favoriteSlice = createSlice({
   name: "favorites",
   initialState,
-  reducers: {},
+  reducers: {
+    clearMessageFavorite: (state) => {
+      state.message = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       // GET FAVORITES
-      .addCase(getFavorites.fulfilled, (state, action: PayloadAction<any>) => {
-        state.info = action.payload.info;
-        state.favorites = action.payload.results;
-        state.error = null;
-        state.loading = false;
-      })
+      .addCase(
+        getFavorites.fulfilled,
+        (state, action: PayloadAction<LikeState>) => {
+          state.info = action.payload.info;
+          state.results = action.payload.results;
+          state.error = null;
+          state.loading = false;
+        }
+      )
 
       // ADD NEW FAVORITE
-      .addCase(postFavorite.fulfilled, (state, action: PayloadAction<any>) => {
-        state.favorites = action.payload.video;
-        state.error = null;
-        state.loading = false;
-      })
+      .addCase(
+        postFavorite.fulfilled,
+        (state, action: PayloadAction<ResponseLike>) => {
+          state.message = action.payload.message;
+          state.error = null;
+          state.loading = false;
+        }
+      )
 
       // DELETE FAVORITE
       .addCase(
         deleteFavorite.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.favorites = action.payload.video;
+          state.message = action.payload.message;
           state.error = null;
           state.loading = false;
         }
@@ -108,3 +122,4 @@ const favoriteSlice = createSlice({
 });
 
 export default favoriteSlice.reducer;
+export const { clearMessageFavorite } = favoriteSlice.actions;
