@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   getIdVideo,
@@ -14,25 +14,9 @@ import Suscription from "@/components/suscription/Suscription";
 import ModalDownload from "@/components/modal/modalDownload/ModalDownload";
 
 function Page() {
-  const [idLike, setIdLike] = useState("");
   const { idVideo }: { idVideo: string } = useParams();
   const dispatch = useAppDispatch();
   const information = useAppSelector(({ videos }) => videos?.videoDetail);
-  const favorite = useAppSelector(({ favorites }) => favorites?.favorites);
-
-  useEffect(() => {
-    if (favorite) {
-      const objInfo = favorite?.map(({ idLike, video: { idVideo } }) => {
-        return { idLike, idVideo };
-      });
-
-      for (const index in objInfo) {
-        if (objInfo[index]?.idVideo === idVideo) {
-          setIdLike(objInfo[index]?.idLike);
-        }
-      }
-    }
-  }, [favorite]);
 
   useEffect(() => {
     if (idVideo) {
@@ -52,7 +36,7 @@ function Page() {
     <div>
       <h1>{idVideo}</h1>
       <Multimedia url={information.url} />
-      <Like like={idLike} />
+      <Like />
       <Suscription />
       <ModalDownload />
       {information.nameVideo}
