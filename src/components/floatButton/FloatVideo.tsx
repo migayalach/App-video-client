@@ -4,7 +4,11 @@ import { VideoCameraAddOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { FloatButton, Modal } from "antd";
 import FormVideo from "../form/form-video/FormVideo";
 
-const FloatVideo: React.FC = () => {
+interface dataInput {
+  option: string;
+}
+
+const FloatVideo: React.FC<dataInput> = ({ option }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -45,7 +49,7 @@ const FloatVideo: React.FC = () => {
           onOk={handleOk}
           onCancel={handleCancel}
         >
-          <FormVideo />
+          <FormVideo option={option} />
         </Modal>
       )}
     </div>
