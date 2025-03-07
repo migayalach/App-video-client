@@ -20,7 +20,7 @@ function page() {
     <div>
       <h1>Hello user, here is your list of videos</h1>
       <div>
-        {myVideos.results.map(({ idVideo, nameVideo, image, average }) => {
+        {myVideos?.results.map(({ idVideo, nameVideo, image, average }) => {
           return (
             <div key={idVideo}>
               <CardVideo
