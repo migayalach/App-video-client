@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { FormProps } from "antd";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input } from "antd";
 import Cloudinary from "@/utils/Cloudinary";
 
 type FieldType = {
