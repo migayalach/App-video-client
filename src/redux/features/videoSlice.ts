@@ -42,7 +42,7 @@ const videoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // VIDEO ALL
+      // !VIDEO ALL
       .addCase(getVideo.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -56,7 +56,7 @@ const videoSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Error desconocido";
       })
-      // VIDEO DETAIL
+      // !VIDEO DETAIL
       .addCase(getIdVideo.pending, (state) => {
         state.loading = true;
         state.error = null;
