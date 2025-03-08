@@ -28,4 +28,5 @@ export interface CardVideoProps {
   nameVideo: string;
   image: string;
   average: number;
+  own?: boolean
 }
