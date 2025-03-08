@@ -55,18 +55,14 @@ const NavBar: React.FC = () => {
                 key: "setting:1",
               },
               {
-                label: <Link href="/audit">Audit</Link>,
+                label: <Link href="/favorites">Favorite videos</Link>,
                 key: "setting:2",
               },
               {
-                label: <Link href="/favorites">Favorite videos</Link>,
+                label: <Link href="/following">Following</Link>,
                 key: "setting:3",
               },
-              {
-                label: <Link href="/following">Following</Link>,
-                key: "setting:4",
-              },
-              { label: "Close sesion", key: "setting:5" },
+              { label: "Close sesion", key: "setting:4" },
             ],
           },
         ]),
