@@ -28,13 +28,14 @@ function page() {
                 nameVideo={nameVideo}
                 image={image}
                 average={average}
+                own={true}
               />
             </div>
           );
         })}
       </div>
       <div>
-        <FloatVideo />
+        <FloatVideo option="" />
       </div>
     </div>
   );
