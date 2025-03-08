@@ -4,7 +4,7 @@ import { Button, Form, Input, Switch } from "antd";
 import Cloudinary from "@/utils/Cloudinary";
 import TextArea from "antd/es/input/TextArea";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { postVideo } from "@/redux/features/myVideos.slice";
+import { editVideo, postVideo } from "@/redux/features/myVideos.slice";
 
 type FieldType = {
   nameVideo: string;
@@ -56,8 +56,8 @@ const FormVideo: React.FC<dataInput> = ({ option }) => {
     if (infoUser) {
       if (!option) {
         dispatch(postVideo({ ...data, idUser: infoUser?.idUser }));
-      } else if (option === "edit") {
-        console.log("editar");
+      } else if (option === "edit" && information) {
+        dispatch(editVideo({ data, idVideo: information?.idVideo }));
       }
     }
   };
@@ -70,7 +70,7 @@ const FormVideo: React.FC<dataInput> = ({ option }) => {
         image: information?.image,
         description: information?.description,
         url: information?.url,
-        stateVideo: information?.stateVideo ? true : false,
+        stateVideo: information?.stateVideo === "true" ? true : false,
       });
     }
   }, [option]);
