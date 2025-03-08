@@ -22,6 +22,16 @@ export interface CreateVideo {
   url: string;
 }
 
+export interface UpdateVideo {
+  idVideo: string;
+  data: CreateVideo;
+}
+
+export interface DeleteVideo {
+  idUser: string;
+  idVideo: string;
+}
+
 export const getAllList = createAsyncThunk<Response, string>(
   "myVideos/getIdUser",
   async (idUser) => {
@@ -51,7 +61,40 @@ export const postVideo = createAsyncThunk<ResNewVideo, CreateVideo>(
   }
 );
 
-export const editVideo = createAsyncThunk<any, any>("", () => {});
+export const editVideo = createAsyncThunk<ResNewVideo, UpdateVideo>(
+  "update-video",
+  async ({ data, idVideo }) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/video/${idVideo}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response) throw new Error("Error al actualizar el video");
+    return response.json();
+  }
+);
+
+export const deleleVideo = createAsyncThunk<ResNewVideo, DeleteVideo>(
+  "deleteVideo",
+  async ({ idUser, idVideo }) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/video/${idUser}/${idVideo}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response) throw new Error("Error");
+    return response.json();
+  }
+);
 
 const myVideos = createSlice({
   name: "myMideos",
@@ -66,9 +109,17 @@ const myVideos = createSlice({
       // !CREATE NEW VIDEO
       .addCase(
         postVideo.fulfilled,
-        (state, action: PayloadAction<ResNewVideo>) => {
-          // state.results = [...state?.results, action?.payload?.video];
-        }
+        (state, action: PayloadAction<ResNewVideo>) => {}
+      )
+      // !UPDATE VIDEO
+      .addCase(
+        editVideo.fulfilled,
+        (state, action: PayloadAction<ResNewVideo>) => {}
+      )
+      //! DELETE VIDEO
+      .addCase(
+        deleleVideo.fulfilled,
+        (state, action: PayloadAction<ResNewVideo>) => {}
       );
   },
 });
