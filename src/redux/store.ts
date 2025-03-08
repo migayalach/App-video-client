@@ -4,6 +4,7 @@ import signReducer from "@/redux/features/loginSlice";
 import downloadReducer from "@redux/features/downloadSlice";
 import favoriteReducer from "@redux/features/favoriteSlice";
 import myVideosReducer from "@/redux/features/myVideos.slice";
+import auditReducer from "@redux/features/audit.slice";
 
 export const makeStore = () => {
   return configureStore({
@@ -13,6 +14,7 @@ export const makeStore = () => {
       videos: videoReducer,
       favorites: favoriteReducer,
       myVideos: myVideosReducer,
+      audit: auditReducer,
     },
   });
 };
