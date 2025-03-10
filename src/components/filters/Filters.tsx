@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import FormFilters from "../form/form-filters/FormFilters";
 
 function Filters() {
   return (
-    <div>Filters</div>
-  )
+    <div>
+      <FormFilters />
+    </div>
+  );
 }
 
-export default Filters
+export default Filters;
