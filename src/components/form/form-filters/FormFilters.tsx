@@ -1,19 +1,33 @@
 import React from "react";
-import type { FormProps } from "antd";
-import { Button, Form, Input } from "antd";
+import { Form } from "antd";
 import SelectOrder from "@/components/select/select-order/SelectOrder";
-
-type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
-};
-
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-  console.log("Success:", values);
-};
+import {
+  clearVideos,
+  getVideo,
+  searchOrder,
+} from "@/redux/features/videoSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 const FormFilters: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const saveOption = (info: string | any) => {
+    setTimeout(() => {
+      if (info !== "") {
+        dispatch(clearVideos());
+        dispatch(
+          searchOrder({
+            search: "video",
+            data: { key: "nameVideo", order: info },
+          })
+        );
+      } else {
+        dispatch(clearVideos());
+        dispatch(getVideo());
+      }
+    }, 2000);
+    return;
+  };
+
   return (
     <Form
       name="basic"
@@ -21,17 +35,10 @@ const FormFilters: React.FC = () => {
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
       initialValues={{ remember: true }}
-      onFinish={onFinish}
       autoComplete="off"
     >
-      <Form.Item<FieldType> label="Order">
-        <SelectOrder />
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Search
-        </Button>
+      <Form.Item label="Order">
+        <SelectOrder action={saveOption} />
       </Form.Item>
     </Form>
   );
