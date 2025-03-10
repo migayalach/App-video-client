@@ -28,7 +28,7 @@ const NavBar: React.FC = () => {
       icon: <HomeOutlined />,
     },
     {
-      label: <Link href="/video">"Videos"</Link>,
+      label: <Link href="/video">Videos</Link>,
       key: "videos",
       icon: <PlayCircleOutlined />,
     },
