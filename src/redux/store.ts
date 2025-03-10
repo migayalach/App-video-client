@@ -5,6 +5,7 @@ import downloadReducer from "@redux/features/downloadSlice";
 import favoriteReducer from "@redux/features/favoriteSlice";
 import myVideosReducer from "@/redux/features/myVideos.slice";
 import auditReducer from "@redux/features/audit.slice";
+import followReducer from "@redux/features/follow.slice";
 
 export const makeStore = () => {
   return configureStore({
@@ -15,6 +16,7 @@ export const makeStore = () => {
       favorites: favoriteReducer,
       myVideos: myVideosReducer,
       audit: auditReducer,
+      follow: followReducer,
     },
   });
 };
