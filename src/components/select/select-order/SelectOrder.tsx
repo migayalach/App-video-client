@@ -1,11 +1,15 @@
 import React from "react";
 import { Select, Space } from "antd";
 
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
+interface inputData {
+  action: Function;
+}
 
-const SelectOrder: React.FC = () => {
+const SelectOrder: React.FC<inputData> = ({ action }) => {
+  const handleChange = (value: string) => {
+    action(value);
+  };
+
   return (
     <Space wrap>
       <Select
