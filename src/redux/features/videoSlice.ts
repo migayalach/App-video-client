@@ -28,6 +28,21 @@ export const getIdVideo = createAsyncThunk<Video, string>(
   }
 );
 
+export const searchOrder = createAsyncThunk<Response, any>(
+  "search",
+  async ({ search, data }) => {
+    const queryData = new URLSearchParams({
+      search,
+      data: JSON.stringify(data),
+    }).toString();
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/filters?${queryData}`
+    );
+    if (!response) throw new Error("Error al obtener informacion");
+    return response.json();
+  }
+);
+
 const videoSlice = createSlice({
   name: "videos",
   initialState,
@@ -69,6 +84,11 @@ const videoSlice = createSlice({
         state.loading = false;
         state.error =
           action.error.message || "Error al obtener los detalles del video";
+      })
+      // !FILTER-VIDEO
+      .addCase(searchOrder.fulfilled, (state, action: PayloadAction<Response>) => {
+        state.info = action.payload.info;
+        state.videos = action.payload.results;
       });
   },
 });
